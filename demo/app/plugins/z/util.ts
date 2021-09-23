@@ -1,6 +1,5 @@
 import { Descendant, Element, Text, Node } from "slate";
-import { initialize } from "slate-angular/custom-event/FallbackCompositionState";
-import { ZArray } from "z/array";
+import { ZArray } from "z/types/array";
 import { ZDoc } from "z/doc";
 import { ZMap } from "z/map";
 import { ZText } from "z/text";

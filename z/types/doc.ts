@@ -1,20 +1,25 @@
 import { ZArray } from "./array";
+import { transact, Transaction } from "../common/transaction";
 
 export class ZDoc {
-    client: number;
-    clock: number = 0;
+    _Transaction: Transaction = null;
 
+    client: number;
+    clock: number = -1;
     content: ZArray;
 
     constructor() {
         this.client = Math.floor((Math.random() * Math.pow(10, 10)));
         this.content = new ZArray();
         this.content.doc = this;
-        this.content.initialize();
     }
 
     insert(index: number, content: any[]) {
         this.content.insert(index, content);
+    }
+
+    transact(f, origin?: any, local?: boolean) {
+        transact(this, f, origin, local);
     }
 
     nextClock() {
