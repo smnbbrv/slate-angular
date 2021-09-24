@@ -11,19 +11,15 @@ export class ID {
 
 export function createID(doc: ZDoc, client: number) {
     const clock = getClientMaxClock(doc, client);
-    return new ID(client, clock + 1);
+    return new ID(client, clock);
 }
 
 export function getClientMaxClock(doc: ZDoc, client: number) {
     const updates = doc.stores.client.get(client);
     if (updates && updates.length > 0) {
         const updateItem = updates[updates.length - 1];
-        if (updateItem.length > 1) {
-            return updateItem.id.clock + updateItem.length - 1;
-        } else {
-            return updateItem.id.clock;
-        }
+        return updateItem.id.clock + updateItem.length;
     } else {
-        return -1;
+        return 0;
     }
 }

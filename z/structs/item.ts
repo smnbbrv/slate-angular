@@ -1,4 +1,4 @@
-import { ID } from "z/common/id";
+import { createID, ID } from "z/common/id";
 import { Transaction } from "z/common/transaction";
 import { ZBaseType } from "z/types/base-type";
 import { ZBaseContent } from "./base-content";
@@ -30,6 +30,14 @@ export class ZItem extends ZBaseUpdate {
 
     get deleted(): boolean {
         throw new Error("Method not implemented.");
+    }
+
+    get lastId() {
+        if (this.length === 1) {
+            this.id;
+        } else {
+            return new ID(this.id.client, this.id.clock + this.length - 1);
+        }
     }
 
     integrate(transaction: Transaction, offset: number) {

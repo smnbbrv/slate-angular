@@ -14,7 +14,7 @@ export function typeMapSet(transaction: Transaction, parent: ZMap, key: string, 
     } else {
         content = new ZContentAny([value]);
     }
-    const item = new ZItem(createID(transaction.doc, transaction.doc.client), left, left?.id, null, null, this, key, content);
+    const item = new ZItem(createID(transaction.doc, transaction.doc.client), left, left?.lastId, null, null, this, key, content);
     item.integrate(transaction, 0);
     parent._map.set(key, item);
 }

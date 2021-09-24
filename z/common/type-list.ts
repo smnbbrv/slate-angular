@@ -19,7 +19,7 @@ export function typeListInsertGenericsAfter(transaction: Transaction, parent: ZB
 
     content.forEach((c) => {
         if (c instanceof ZBaseType) {
-            left = new ZItem(createID(transaction.doc, transaction.doc.client), left, left?.id, right, right?.id, parent, null, new ZContentType(c));
+            left = new ZItem(createID(transaction.doc, transaction.doc.client), left, left?.lastId, right, right?.id, parent, null, new ZContentType(c));
             left.integrate(transaction, 0);
             if (!parent._start) {
                 parent._start = left;
