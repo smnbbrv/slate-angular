@@ -17,6 +17,9 @@ export class ZItem extends ZBaseUpdate {
     constructor(id: ID, left: ZItem | null, origin: ID | null, right: ZItem | null, rightOrigin: ID | null, parent: ZBaseType | ID | null, parentSub: string | null, content: ZBaseContent) {
         super(id, content.getLength());
         this.left = left;
+        if (left) {
+            left.right = this;
+        }
         this.origin = origin;
         this.right = right;
         this.rightOrigin = rightOrigin;
@@ -30,6 +33,7 @@ export class ZItem extends ZBaseUpdate {
     }
 
     integrate(transaction: Transaction, offset: number) {
+        transaction.doc.addUpdateItem(this);
         if (this.content instanceof ZContentType) {
             this.content.type._integrate(transaction.doc, this);
         }

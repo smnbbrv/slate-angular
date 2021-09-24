@@ -15,6 +15,7 @@ export class ZContentString extends ZBaseContent {
     getContent(): any[] {
         return this.str.split('');
     }
+
     isCountable(): boolean {
         return true;
     }

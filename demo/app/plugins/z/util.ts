@@ -1,8 +1,8 @@
 import { Descendant, Element, Text, Node } from "slate";
 import { ZArray } from "z/types/array";
-import { ZDoc } from "z/doc";
-import { ZMap } from "z/map";
-import { ZText } from "z/text";
+import { ZDoc } from "z/types/doc";
+import { ZMap } from "z/types/map";
+import { ZText } from "z/types/text";
 
 export function toZDoc(children: Descendant[]): ZDoc {
     const zdoc = new ZDoc()

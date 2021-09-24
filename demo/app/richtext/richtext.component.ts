@@ -4,6 +4,7 @@ import { withHistory } from 'slate-history';
 import { withAngular } from 'slate-angular';
 import { DemoMarkTextComponent, MarkTypes } from '../components/text/text.component';
 import isHotkey from 'is-hotkey';
+import { toZDoc } from '../plugins/z/util';
 
 const SLATE_DEV_MODE_KEY = 'slate-dev';
 
@@ -157,6 +158,8 @@ export class DemoRichtextComponent implements OnInit {
             console.log(`anchor: ${JSON.stringify(this.editor.selection?.anchor)}\nfocus:  ${JSON.stringify(this.editor.selection?.focus)}`);
             console.log('operations: ', this.editor.operations);
         }
+        const zdoc = toZDoc(this.editor.children);
+        console.log(zdoc);
     }
 
     renderElement = (element: Element & { type: string }) => {
