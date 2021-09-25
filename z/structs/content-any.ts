@@ -17,4 +17,10 @@ export class ZContentAny extends ZBaseContent {
     isCountable(): boolean {
         return true;
     }
+
+    splice(offset: number): ZBaseContent {
+        const contentAny = new ZContentAny(this.arr.slice(offset));
+        this.arr = this.arr.slice(0, offset);
+        return contentAny;
+    }
 }

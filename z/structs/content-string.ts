@@ -19,4 +19,10 @@ export class ZContentString extends ZBaseContent {
     isCountable(): boolean {
         return true;
     }
+
+    splice(offset: number): ZBaseContent {
+        const contentString = new ZContentString(this.str.slice(offset));
+        this.str = this.str.slice(0, offset);
+        return contentString;
+    }
 }

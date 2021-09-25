@@ -3,6 +3,7 @@ import { Transaction } from "z/common/transaction";
 import { ZBaseType } from "z/types/base-type";
 import { ZBaseContent } from "./base-content";
 import { ZBaseUpdate } from "./base-update";
+import { ZContentString } from "./content-string";
 import { ZContentType } from "./content-type";
 
 export class ZItem extends ZBaseUpdate {
@@ -47,3 +48,16 @@ export class ZItem extends ZBaseUpdate {
         }
     }
 };
+
+export function splitItem(transaction: Transaction, left: ZItem, count: number) {
+    const updates = transaction.doc.stores.client.get(transaction.doc.client);
+    const index = updates.findIndex((value) => value === left);
+    const newRightItem = new ZItem(new ID(transaction.doc.client, left.id.clock + count), left, new ID(transaction.doc.client, left.id.clock + count - 1), left.right, left.right?.id, left.parent, left.parentSub, left.content.splice(count));
+    left.right = newRightItem;
+    left.rightOrigin = newRightItem.id;
+    left.length = count;
+    if (newRightItem.right !== null) {
+        newRightItem.right.left = newRightItem;
+    }
+    updates.splice(index + 1, 0, newRightItem);
+}

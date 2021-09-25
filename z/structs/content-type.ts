@@ -2,6 +2,9 @@ import { ZBaseType } from "z/types/base-type";
 import { ZBaseContent } from "./base-content";
 
 export class ZContentType extends ZBaseContent {
+    splice(offset: any): ZBaseContent {
+        throw new Error("Method not implemented.");
+    }
     type: ZBaseType;
 
     constructor(type: ZBaseType) {
