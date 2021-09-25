@@ -27,6 +27,17 @@ export function typeTextInsert(transaction: Transaction, parent: ZText, offset: 
 
 export function typeTextDelete(transaction: Transaction, parent: ZText, offset: number, length: number) {
     const textPosition = findPosition(transaction, parent, offset);
+    let count = length;
+    while (textPosition.right !== null && count > 0) {
+        if (count < textPosition.right.length) {
+            // split_item
+            splitItem(transaction, textPosition.right, count);
+        }
+        textPosition.right.delete(transaction);
+        count -= textPosition.right.length;
+        textPosition.left = textPosition.right;
+        textPosition.right = textPosition.right.right;
+    }
 }
 
 export function findPosition(transaction: Transaction, text: ZText, index: number) {

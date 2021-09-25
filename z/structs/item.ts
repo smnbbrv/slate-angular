@@ -1,9 +1,9 @@
-import { createID, ID } from "z/common/id";
+import { ID } from "z/common/id";
 import { Transaction } from "z/common/transaction";
+import { BIT2, BIT3 } from "z/lib/binary";
 import { ZBaseType } from "z/types/base-type";
 import { ZBaseContent } from "./base-content";
 import { ZBaseUpdate } from "./base-update";
-import { ZContentString } from "./content-string";
 import { ZContentType } from "./content-type";
 
 export class ZItem extends ZBaseUpdate {
@@ -14,6 +14,7 @@ export class ZItem extends ZBaseUpdate {
     parent: ZBaseType | ID | null;
     parentSub: string | null;
     content: ZBaseContent;
+    info: number;
 
     constructor(id: ID, left: ZItem | null, origin: ID | null, right: ZItem | null, rightOrigin: ID | null, parent: ZBaseType | ID | null, parentSub: string | null, content: ZBaseContent) {
         super(id, content.getLength());
@@ -27,10 +28,24 @@ export class ZItem extends ZBaseUpdate {
         this.parent = parent;
         this.parentSub = parentSub;
         this.content = content;
+        this.info = this.content.isCountable() ? BIT2 : 0;
     }
 
     get deleted(): boolean {
-        throw new Error("Method not implemented.");
+        return (this.info & BIT3) > 0;
+    }
+
+    // set deleted(doDelete) {
+    //     if (this.deleted !== doDelete) {
+    //         this.info ^= BIT3;
+    //     }
+    // } 
+
+    delete(transaction: Transaction) {
+        if (!this.deleted) {
+            this.markDeleted();
+            this.content.delete(transaction);
+        }
     }
 
     get lastId() {
@@ -46,6 +61,10 @@ export class ZItem extends ZBaseUpdate {
         if (this.content instanceof ZContentType) {
             this.content.type._integrate(transaction.doc, this);
         }
+    }
+
+    markDeleted() {
+        this.info ^= BIT3;
     }
 };
 

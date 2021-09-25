@@ -1,6 +1,8 @@
 import { ZBaseContent } from "./base-content";
 
 export class ZContentString extends ZBaseContent {
+    delete(transaction: any) {  
+    }
     str: String;
 
     constructor(str: String) {
