@@ -1,5 +1,33 @@
 # Changelog
 
+### [1.5.0](https://github.com/worktile/slate-angular/compare/v1.4.2...v1.5.0) (2021-09-27)
+
+### Features
+
+* **core:** feat(core): bump angular to 12
+
+
+### [1.4.2](https://github.com/worktile/slate-angular/compare/v1.4.1...v1.4.2) (2021-09-23)
+
+### Bug Fixes
+
+* **core:** fix(core): remove selectionchange throttle to avoid selection out of sync
+
+
+### [1.4.1](https://github.com/worktile/slate-angular/compare/v1.4.0...v1.4.1) (2021-09-18)
+
+### Features
+
+* **decorate:** feat(decorate): support isStrictDecorate
+
+
+### [1.4.0](https://github.com/worktile/slate-angular/compare/v1.4.0...v1.3.1) (2021-08-31)
+
+### Bug Fixes
+
+* **core:** feat(core): contextChange not execute when readonly changes
+
+
 ### [1.3.1](https://github.com/worktile/slate-angular/compare/v1.3.1...v1.3.0) (2021-08-19)
 
 ### Features

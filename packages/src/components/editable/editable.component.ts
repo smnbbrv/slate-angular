@@ -85,8 +85,6 @@ export class SlateEditableComponent implements OnInit, OnChanges, OnDestroy, Aft
 
     private destroy$ = new Subject();
 
-    private selectionChange$ = new Subject<Event>();
-
     isComposing = false;
     isDraggingInternally = false;
     isUpdatingSelection = false;
@@ -110,10 +108,11 @@ export class SlateEditableComponent implements OnInit, OnChanges, OnDestroy, Aft
 
     @Input() decorate: (entry: NodeEntry) => Range[] = () => [];
 
+    @Input() isStrictDecorate: boolean = true;
+
     @Input() trackBy: (node: Element) => any = () => null;
 
-    @Input()
-    readonly = false;
+    @Input() readonly = false;
 
     //#region input event handler
     @Input() beforeInput: (event: Event) => void;
@@ -188,6 +187,7 @@ export class SlateEditableComponent implements OnInit, OnChanges, OnDestroy, Aft
         const readonlyChange = simpleChanges['readonly'];
         if (readonlyChange) {
             IS_READONLY.set(this.editor, this.readonly);
+            this.detectContext();
             this.toSlateSelection();
         }
     }
@@ -221,23 +221,10 @@ export class SlateEditableComponent implements OnInit, OnChanges, OnDestroy, Aft
         this.addEventListener(
             'selectionchange',
             event => {
-                this.selectionChange$.next(event);
+                this.toSlateSelection();
             },
             window.document
         );
-        this.selectionChange$
-            .pipe(
-                throttle(
-                    (value: Event) => {
-                        return interval(100);
-                    },
-                    { trailing: true, leading: true }
-                ),
-                takeUntil(this.destroy$)
-            )
-            .subscribe(event => {
-                this.toSlateSelection();
-            });
         if (HAS_BEFORE_INPUT_SUPPORT) {
             this.addEventListener('beforeinput', this.onDOMBeforeInput.bind(this));
         }
@@ -314,7 +301,7 @@ export class SlateEditableComponent implements OnInit, OnChanges, OnDestroy, Aft
                 // COMPAT: Since the DOM range has no concept of backwards/forwards
                 // we need to check and do the right thing here.
                 if (Range.isBackward(selection)) {
-                    // tslint:disable-next-line:max-line-length
+                    // eslint-disable-next-line max-len
                     domSelection.setBaseAndExtent(
                         newDomRange.endContainer,
                         newDomRange.endOffset,
@@ -322,7 +309,7 @@ export class SlateEditableComponent implements OnInit, OnChanges, OnDestroy, Aft
                         newDomRange.startOffset
                     );
                 } else {
-                    // tslint:disable-next-line:max-line-length
+                    // eslint-disable-next-line max-len
                     domSelection.setBaseAndExtent(
                         newDomRange.startContainer,
                         newDomRange.startOffset,
@@ -394,6 +381,7 @@ export class SlateEditableComponent implements OnInit, OnChanges, OnDestroy, Aft
             renderLeaf: this.renderLeaf,
             renderText: this.renderText,
             trackBy: this.trackBy,
+            isStrictDecorate: this.isStrictDecorate,
             templateComponent: this.templateComponent
         };
     }
