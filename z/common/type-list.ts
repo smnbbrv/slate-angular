@@ -27,3 +27,14 @@ export function typeListInsertGenericsAfter(transaction: Transaction, parent: ZB
         }
     });
 }
+
+export function typeListGet(type: ZBaseType, index: number) {
+    let n = type._start;
+    while(n) {
+        if (index < n.length) {
+            return n.content.getContent()[index];
+        }
+        index -= n.length;
+        n = n.right;
+    }
+}

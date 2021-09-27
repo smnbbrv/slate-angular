@@ -24,6 +24,7 @@ export class ZMap extends ZBaseType {
     }
 
     get(key: string) {
+        return this._map.get(key).content;
     }
 
     delete(key: string) {

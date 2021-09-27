@@ -12,4 +12,8 @@ export class ZBaseType {
         this.doc = doc;
         this._item = item;
     }
+
+    get parent() {
+        return this._item ? this._item.parent : null;
+    }
 }

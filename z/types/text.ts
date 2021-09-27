@@ -42,4 +42,8 @@ export class ZText extends ZBaseType {
         super._integrate(doc, item);
         this._pending.forEach((f) => f());
     }
+
+    get length() {
+        return this._length;
+    }
 }
