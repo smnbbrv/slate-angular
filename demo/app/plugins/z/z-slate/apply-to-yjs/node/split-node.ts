@@ -16,7 +16,6 @@ export default function splitNode(
   const [parent, index]: [SyncNode, number] = getParent(doc, op.path);
 
   const children = SyncNode.getChildren(parent);
-  invariant(children, 'Parent of node should have children');
 
   const target = children.get(index);
   const inject = cloneSyncElement(target);

@@ -5,6 +5,8 @@ import { withAngular } from 'slate-angular';
 import { DemoMarkTextComponent, MarkTypes } from '../components/text/text.component';
 import isHotkey from 'is-hotkey';
 import { toZDoc } from '../plugins/z/util';
+import { ZDoc } from 'z/types/doc';
+import applySlateOps from '../plugins/z/z-slate/apply-to-yjs';
 
 const SLATE_DEV_MODE_KEY = 'slate-dev';
 
@@ -22,7 +24,18 @@ const LIST_TYPES = ['numbered-list', 'bulleted-list']
     templateUrl: 'richtext.component.html'
 })
 export class DemoRichtextComponent implements OnInit {
-    value = initialValue;
+    value = [
+        {
+            type: 'paragraph',
+            children: [
+                {
+                    text: 'PingCode & Worktile !'
+                }
+            ]
+        }
+    ];
+
+    zDoc: ZDoc;
 
     toggleBlock = (format) => {
         const isActive = this.isBlockActive(format)
@@ -151,6 +164,10 @@ export class DemoRichtextComponent implements OnInit {
         if (!localStorage.getItem(SLATE_DEV_MODE_KEY)) {
             console.log(`open dev mode use code：window.localStorage.setItem('${SLATE_DEV_MODE_KEY}', true);`);
         }
+        setTimeout(() => {
+            this.zDoc = toZDoc(this.editor.children);
+            console.log(this.zDoc);
+        }, 200);
     }
 
     valueChange(event) {
@@ -158,8 +175,8 @@ export class DemoRichtextComponent implements OnInit {
             console.log(`anchor: ${JSON.stringify(this.editor.selection?.anchor)}\nfocus:  ${JSON.stringify(this.editor.selection?.focus)}`);
             console.log('operations: ', this.editor.operations);
         }
-        const zdoc = toZDoc(this.editor.children);
-        console.log(zdoc);
+        applySlateOps(this.zDoc.content, this.editor.operations, this.editor);
+        console.log(this.zDoc);
     }
 
     renderElement = (element: Element & { type: string }) => {
