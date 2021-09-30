@@ -16,6 +16,7 @@ export class ZArray extends ZBaseType {
     }
 
     delete(index: number) {
+        
     }
 
     findItemByIndex(index: number) {

@@ -4,7 +4,7 @@ import { ZItem } from "../structs/item";
 export class ZBaseType {
     _item: ZItem | null;
     _map = new Map<string, ZItem>();
-    _start: ZItem | null;
+    _start: ZItem | null = null;
     doc: ZDoc | null = null;
     _length: number;
 
