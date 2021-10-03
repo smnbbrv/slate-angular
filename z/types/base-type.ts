@@ -6,7 +6,7 @@ export class ZBaseType {
     _map = new Map<string, ZItem>();
     _start: ZItem | null = null;
     doc: ZDoc | null = null;
-    _length: number;
+    _length: number = 0;
 
     _integrate(doc: ZDoc, item: ZItem) {
         this.doc = doc;

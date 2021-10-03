@@ -14,18 +14,18 @@ export default function cloneSyncElement(element: SyncElement): SyncElement {
     clone.set('text', textElement);
   }
 
-//   if (children !== undefined) {
-//     const childElements = children.map(cloneSyncElement);
-//     const childContainer = new ZArray();
-//     childContainer.insert(0, childElements);
-//     clone.set('children', childContainer);
-//   }
+  if (children !== undefined) {
+    const childElements = children.map(cloneSyncElement);
+    const childContainer = new ZArray();
+    childContainer.insert(0, childElements);
+    clone.set('children', childContainer);
+  }
 
-//   Array.from(element.entries()).forEach(([key, value]) => {
-//     if (key !== 'children' && key !== 'text') {
-//       clone.set(key, value);
-//     }
-//   });
+  Array.from(element.entries()).forEach(([key, value]) => {
+    if (key !== 'children' && key !== 'text') {
+      clone.set(key, value);
+    }
+  });
 
   return clone;
 }

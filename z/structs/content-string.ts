@@ -1,8 +1,6 @@
 import { ZBaseContent } from "./base-content";
 
 export class ZContentString extends ZBaseContent {
-    delete(transaction: any) {  
-    }
     str: String;
 
     constructor(str: String) {
@@ -26,5 +24,9 @@ export class ZContentString extends ZBaseContent {
         const contentString = new ZContentString(this.str.slice(offset));
         this.str = this.str.slice(0, offset);
         return contentString;
+    }
+
+    delete(transaction: any) {
+        
     }
 }

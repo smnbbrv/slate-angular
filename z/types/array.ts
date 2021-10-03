@@ -1,6 +1,7 @@
 import { ZBaseType } from "./base-type";
 import { transact, Transaction } from "../common/transaction";
-import { typeListGet, typeListInsertGenerics } from "z/common/type-list";
+import { typeListDelete, typeListGet, typeListInsertGenerics } from "z/common/type-list";
+import { ZMap } from "./map";
 
 export class ZArray extends ZBaseType {
     _prelimContent: Array<any> = [];
@@ -8,6 +9,7 @@ export class ZArray extends ZBaseType {
     insert(index: number, content: any[]) {
         if (this.doc !== null) {
             transact(this.doc, (transaction: Transaction) => {
+                this._length += content.length;
                 typeListInsertGenerics(transaction, this, index, content);
             });
         } else {
@@ -15,8 +17,11 @@ export class ZArray extends ZBaseType {
         }
     }
 
-    delete(index: number) {
-        
+    delete(index: number, length?: number | undefined) {
+        transact(this.doc, (transaction: Transaction) => {
+            this._length -= length;
+            typeListDelete(transaction, this, index, length);
+        });
     }
 
     findItemByIndex(index: number) {
@@ -34,7 +39,17 @@ export class ZArray extends ZBaseType {
 
     get length() {
         // return this._prelimContent === null ? this._length : this._prelimContent.length
-        return 0;
+        return this._length;
+    }
+
+    map(callbackFn: (zMap: ZMap) => {}) {
+        let right = this._start;
+        const ret = [];
+        while (right) {
+            ret.push(callbackFn(right.content.getContent()[0]));
+            right = right.right;
+        }
+        return ret;
     }
 }
 

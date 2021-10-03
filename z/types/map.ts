@@ -24,7 +24,7 @@ export class ZMap extends ZBaseType {
     }
 
     get(key: string) {
-        return this._map.get(key).content.getContent()[0];
+        return this._map.get(key)?.content.getContent()[0];
     }
 
     delete(key: string) {
@@ -36,5 +36,9 @@ export class ZMap extends ZBaseType {
             this.set(key, value)
         })
         this._prelimContent = null
+    }
+
+    entries() {
+        return this._map.entries();
     }
 }

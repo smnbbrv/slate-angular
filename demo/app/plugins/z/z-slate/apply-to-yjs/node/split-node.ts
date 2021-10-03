@@ -40,11 +40,11 @@ export default function splitNode(
     const targetChildren = SyncNode.getChildren(target);
     const injectChildren = SyncNode.getChildren(inject);
 
-    // targetChildren.delete(op.position, targetChildren.length - op.position);
+    targetChildren.delete(op.position, targetChildren.length - op.position);
 
-    // if (op.position !== undefined) {
-    //   injectChildren.delete(0, op.position);
-    // }
+    if (op.position !== undefined) {
+      injectChildren.delete(0, op.position);
+    }
   }
 
   return doc;
