@@ -23,16 +23,16 @@ export default function mergeNode(
   const prevText = SyncNode.getText(prev);
   const nextText = SyncNode.getText(next);
 
-  // if (prevText && nextText) {
-  //   prevText.insert(prevText.length, nextText.toString());
-  // } else {
-  //   const nextChildren = SyncNode.getChildren(next);
-  //   const prevChildren = SyncNode.getChildren(prev);
+  if (prevText && nextText) {
+    prevText.insert(prevText.length, nextText.toString());
+  } else {
+    const nextChildren = SyncNode.getChildren(next);
+    const prevChildren = SyncNode.getChildren(prev);
 
-  //   const toPush = nextChildren.map(cloneSyncElement);
-  //   prevChildren.push(toPush);
-  // }
+    const toPush = nextChildren.map(cloneSyncElement);
+    prevChildren.push(toPush);
+  }
 
-  // children.delete(index, 1);
+  children.delete(index, 1);
   return doc;
 }

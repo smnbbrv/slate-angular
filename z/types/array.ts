@@ -17,10 +17,10 @@ export class ZArray extends ZBaseType {
         }
     }
 
-    delete(index: number, length?: number | undefined) {
+    delete(index: number, length?: number | undefined ) {
         transact(this.doc, (transaction: Transaction) => {
             this._length -= length;
-            typeListDelete(transaction, this, index, length);
+            typeListDelete(transaction, this, index, length ? length : 1);
         });
     }
 
@@ -46,10 +46,30 @@ export class ZArray extends ZBaseType {
         let right = this._start;
         const ret = [];
         while (right) {
-            ret.push(callbackFn(right.content.getContent()[0]));
+            if (!right.deleted) {
+                ret.push(callbackFn(right.content.getContent()[0]));
+            }
             right = right.right;
         }
         return ret;
+    }
+
+    push(content: any[]) {
+        const index = this._length;
+        this.insert(index, content);
+    }
+
+    toJSON() {
+        const content = [];
+        let right = this._start;
+        while (right) {
+            if (!right.deleted && right.length > 0) {
+                const itemContent = right.content.getContent()[0].toJSON();
+                content.push(itemContent);
+            }
+            right = right.right;
+        }
+        return content;
     }
 }
 

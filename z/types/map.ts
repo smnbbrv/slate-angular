@@ -39,6 +39,32 @@ export class ZMap extends ZBaseType {
     }
 
     entries() {
-        return this._map.entries();
+        return createZMapEntriesIterator(this._map);
+    }
+
+    toJSON() {
+        const obj = {};
+        for (const [key, item] of this.entries()) {
+            if (item instanceof ZBaseType) {
+                obj[key] = item.toJSON();
+            } else {
+                obj[key] = item;
+            }
+        }
+        return obj;
+    }
+}
+
+function* createZMapEntriesIterator(map: Map<string, any>) {
+    const iterator = map.entries();
+    while (true) {
+        const res = iterator.next();
+        if (res.done) {
+            break;
+        }
+        const [key, item] = res.value;
+        if (!item.deleted) {
+            yield [key, item.content.getContent()[0]];
+        }
     }
 }

@@ -1,7 +1,7 @@
 import { ZDoc } from "./doc";
 import { ZItem } from "../structs/item";
 
-export class ZBaseType {
+export abstract class ZBaseType {
     _item: ZItem | null;
     _map = new Map<string, ZItem>();
     _start: ZItem | null = null;
@@ -16,4 +16,6 @@ export class ZBaseType {
     get parent() {
         return this._item ? this._item.parent : null;
     }
+
+    abstract toJSON();
 }

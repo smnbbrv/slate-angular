@@ -42,4 +42,8 @@ export class ZDoc {
             this.stores.client.set(item.id.client, updates);
         }
     }
+
+    toJSON() {
+        return this.content.toJSON();
+    }
 }

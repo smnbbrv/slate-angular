@@ -29,7 +29,15 @@ export class DemoRichtextComponent implements OnInit {
             type: 'paragraph',
             children: [
                 {
-                    text: 'PingCode & Worktile !'
+                    text: 'PingCode & 2'
+                }
+            ]
+        },
+        {
+            type: 'paragraph',
+            children: [
+                {
+                    text: '2Worktile !'
                 }
             ]
         }
@@ -177,6 +185,7 @@ export class DemoRichtextComponent implements OnInit {
         }
         applySlateOps(this.zDoc.content, this.editor.operations, this.editor);
         console.log(this.zDoc);
+        console.log(this.zDoc.toJSON());
     }
 
     renderElement = (element: Element & { type: string }) => {

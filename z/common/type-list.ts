@@ -21,9 +21,17 @@ export function typeListInsertGenerics(transaction: Transaction, parent: ZBaseTy
         return;
     }
     let left = parent._start;
-    while (left && index > 1) {
-        left = left.right;
-        index--;
+    while (left) {
+        if (left.deleted) {
+            left = left.right;
+            continue;
+        }
+        if (index > 1) {
+            left = left.right;
+            index--;
+        } else {
+            break;
+        }
     }
     typeListInsertGenericsAfter(transaction, parent, left, content);
 }
@@ -44,13 +52,17 @@ export function typeListInsertGenericsAfter(transaction: Transaction, parent: ZB
 }
 
 export function typeListGet(type: ZBaseType, index: number) {
-    let n = type._start;
-    while (n) {
-        if (index < n.length) {
-            return n.content.getContent()[index];
+    let current = type._start;
+    while (current) {
+        if (current.deleted) {
+            current = current.right;
+            continue;
         }
-        index -= n.length;
-        n = n.right;
+        if (index < current.length) {
+            return current.content.getContent()[index];
+        }
+        index -= current.length;
+        current = current.right;
     }
 }
 

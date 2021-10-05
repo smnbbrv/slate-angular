@@ -61,4 +61,8 @@ export class ZText extends ZBaseType {
         }
         return str;
     }
+
+    toJSON() {
+        return this.toString();
+    }
 }

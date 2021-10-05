@@ -47,9 +47,20 @@ export function findPosition(transaction: Transaction, text: ZText, index: numbe
 }
 
 export function findNextPosition(transaction: Transaction, textPosition: ZTextPosition, count: number) {
-    while (textPosition.right && count > 0) {
+    while (textPosition.right) {
 
-        if (textPosition.right.content instanceof ZContentString) {
+        if (textPosition.right.length === 0 || textPosition.right.deleted) {
+            textPosition.left = textPosition.right;
+            textPosition.right = textPosition.right.right;
+            continue;
+        }
+
+        if (count === 0) {
+            break;
+        }
+
+
+        if (!textPosition.right.deleted && textPosition.right.content instanceof ZContentString && textPosition.right.length > 0) {
             if (count < textPosition.right.length) {
                 // split_item
                 splitItem(transaction, textPosition.right, count);
