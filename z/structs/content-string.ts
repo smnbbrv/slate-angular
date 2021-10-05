@@ -27,6 +27,5 @@ export class ZContentString extends ZBaseContent {
     }
 
     delete(transaction: any) {
-        
     }
 }

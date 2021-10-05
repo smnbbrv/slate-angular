@@ -38,11 +38,10 @@ export class ZArray extends ZBaseType {
     }
 
     get length() {
-        // return this._prelimContent === null ? this._length : this._prelimContent.length
-        return this._length;
+        return this._prelimContent === null ? this._length : this._prelimContent.length;
     }
 
-    map(callbackFn: (zMap: ZMap) => {}) {
+    map(callbackFn: (content: any) => {}) {
         let right = this._start;
         const ret = [];
         while (right) {
