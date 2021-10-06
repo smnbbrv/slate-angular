@@ -1,6 +1,7 @@
 import { ZArray } from "./array";
 import { transact, Transaction } from "../common/transaction";
 import { ZBaseUpdate } from "z/structs/base-update";
+import { DeleteItem, DeleteSet } from "z/common/delete-set";
 
 export class ZDoc {
     _Transaction: Transaction = null;
@@ -13,12 +14,13 @@ export class ZDoc {
         this.client = Math.floor((Math.random() * Math.pow(10, 10)));
         this.content = new ZArray();
         this.content.doc = this;
-        this.stores = {
-            client: new Map()
+        this.store = {
+            clients: new Map(),
+            ds: new DeleteSet()
         };
     }
 
-    stores: { client: Map<number, Array<ZBaseUpdate>> }
+    store: { clients: Map<number, Array<ZBaseUpdate>>, ds: DeleteSet }
 
     insert(index: number, content: any[]) {
         this.content.insert(index, content);
@@ -34,12 +36,12 @@ export class ZDoc {
     }
 
     addUpdateItem(item: ZBaseUpdate) {
-        const updates = this.stores.client.get(item.id.client);
+        const updates = this.store.clients.get(item.id.client);
         if (updates) {
             updates.push(item);
         } else {
             const updates = [item];
-            this.stores.client.set(item.id.client, updates);
+            this.store.clients.set(item.id.client, updates);
         }
     }
 

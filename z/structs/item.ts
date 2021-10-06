@@ -1,3 +1,4 @@
+import { addToDeleteSet } from "z/common/delete-set";
 import { ID } from "z/common/id";
 import { Transaction } from "z/common/transaction";
 import { BIT2, BIT3 } from "z/lib/binary";
@@ -43,6 +44,7 @@ export class ZItem extends ZBaseUpdate {
 
     delete(transaction: Transaction) {
         if (!this.deleted) {
+            addToDeleteSet(transaction, this);
             this.markDeleted();
             this.content.delete(transaction);
         }
@@ -69,7 +71,7 @@ export class ZItem extends ZBaseUpdate {
 };
 
 export function splitItem(transaction: Transaction, left: ZItem, count: number) {
-    const updates = transaction.doc.stores.client.get(transaction.doc.client);
+    const updates = transaction.doc.store.clients.get(transaction.doc.client);
     const index = updates.findIndex((value) => value === left);
     const newRightItem = new ZItem(new ID(transaction.doc.client, left.id.clock + count), left, new ID(transaction.doc.client, left.id.clock + count - 1), left.right, left.right?.id, left.parent, left.parentSub, left.content.splice(count));
     left.right = newRightItem;

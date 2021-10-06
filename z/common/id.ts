@@ -15,7 +15,7 @@ export function createID(doc: ZDoc, client: number) {
 }
 
 export function getClientMaxClock(doc: ZDoc, client: number) {
-    const updates = doc.stores.client.get(client);
+    const updates = doc.store.clients.get(client);
     if (updates && updates.length > 0) {
         const updateItem = updates[updates.length - 1];
         return updateItem.id.clock + updateItem.length;

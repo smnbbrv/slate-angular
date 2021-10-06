@@ -28,9 +28,6 @@ export class ZContentType extends ZBaseContent {
     delete(transaction: any) {
         if (this.type._map) {
             for (const [key, item] of this.type._map.entries()) {
-                // if (item.content.getContent()[0] instanceof ZBaseType) {
-                //     item.delete(transaction);
-                // }
                 item.delete(transaction);
             }
         }
