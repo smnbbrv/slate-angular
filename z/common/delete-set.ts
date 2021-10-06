@@ -8,7 +8,8 @@ export class DeleteItem {
     len: number;
 
     constructor(clock: number, len: number) {
-
+        this.clock = clock;
+        this.len = len;
     }
 }
 
@@ -24,6 +25,7 @@ export function addToDeleteSet(transaction: Transaction, item: ZItem) {
     let clientDeleteSet = ds.clients.get(item.id.client);
     if (!clientDeleteSet) {
         clientDeleteSet = [];
+        ds.clients.set(item.id.client, clientDeleteSet);
     }
     clientDeleteSet.push(new DeleteItem(item.id.clock, item.length));
 }

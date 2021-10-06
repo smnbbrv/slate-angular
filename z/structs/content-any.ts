@@ -2,7 +2,6 @@ import { ZBaseContent } from "./base-content";
 
 export class ZContentAny extends ZBaseContent {
     delete(transaction: any) {
-        throw new Error("Method not implemented.");
     }
     arr: Array<any>;
 
