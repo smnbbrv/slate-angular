@@ -29,15 +29,7 @@ export class DemoRichtextComponent implements OnInit {
             type: 'paragraph',
             children: [
                 {
-                    text: 'PingCode & 2'
-                }
-            ]
-        },
-        {
-            type: 'paragraph',
-            children: [
-                {
-                    text: '2Worktile !'
+                    text: 'PingCode'
                 }
             ]
         }

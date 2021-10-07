@@ -1,6 +1,10 @@
 import { ZBaseType } from "z/types/base-type";
 import { ZBaseContent } from "./base-content";
 
+export const ZArrayRefID = 0;
+export const ZMapRefID = 1;
+export const ZTextRefID = 2;
+
 export class ZContentType extends ZBaseContent {
     splice(offset: any): ZBaseContent {
         throw new Error("Method not implemented.");
@@ -38,5 +42,9 @@ export class ZContentType extends ZBaseContent {
                 right = right.right;
             }
         }
+    }
+
+    getRef() {
+        return 7;
     }
 }

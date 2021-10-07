@@ -25,4 +25,8 @@ export class ZContentAny extends ZBaseContent {
         this.arr = this.arr.slice(0, offset);
         return contentAny;
     }
+
+    getRef() {
+        return 8;
+    }
 }

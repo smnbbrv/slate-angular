@@ -28,4 +28,8 @@ export class ZContentString extends ZBaseContent {
 
     delete(transaction: any) {
     }
+
+    getRef() {
+        return 4;
+    }
 }

@@ -2,6 +2,7 @@ import { ZBaseType } from "./base-type";
 import { transact, Transaction } from "../common/transaction";
 import { typeListDelete, typeListGet, typeListInsertGenerics } from "z/common/type-list";
 import { ZMap } from "./map";
+import { ZArrayRefID } from "z/structs/content-type";
 
 export class ZArray extends ZBaseType {
     _prelimContent: Array<any> = [];
@@ -69,6 +70,10 @@ export class ZArray extends ZBaseType {
             right = right.right;
         }
         return content;
+    }
+
+    getRefID() {
+        return ZArrayRefID;
     }
 }
 

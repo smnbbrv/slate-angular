@@ -1,6 +1,7 @@
 import { transact, Transaction } from "z/common/transaction";
 import { typeTextDelete, typeTextInsert } from "z/common/type-text";
 import { ZContentString } from "z/structs/content-string";
+import { ZTextRefID } from "z/structs/content-type";
 import { ZItem } from "z/structs/item";
 import { ZBaseType } from "./base-type";
 import { ZDoc } from "./doc";
@@ -65,5 +66,9 @@ export class ZText extends ZBaseType {
 
     toJSON() {
         return this.toString();
+    }
+
+    getRefID() {
+        return ZTextRefID;
     }
 }

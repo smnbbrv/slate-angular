@@ -4,4 +4,5 @@ export abstract class ZBaseContent {
     abstract isCountable(): boolean;
     abstract splice(offset): ZBaseContent;
     abstract delete(transaction);
+    abstract getRef(): number;
 }

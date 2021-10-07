@@ -18,4 +18,6 @@ export abstract class ZBaseType {
     }
 
     abstract toJSON();
+
+    abstract getRefID();
 }

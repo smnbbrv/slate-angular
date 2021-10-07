@@ -3,6 +3,7 @@ import { ZDoc } from "./doc";
 import { ZItem } from "../structs/item";
 import { transact, Transaction } from "z/common/transaction";
 import { typeMapSet } from "z/common/type-map";
+import { ZMapRefID } from "z/structs/content-type";
 
 export class ZMap extends ZBaseType {
     _map: Map<string, ZItem>;
@@ -52,6 +53,10 @@ export class ZMap extends ZBaseType {
             }
         }
         return obj;
+    }
+
+    getRefID() {
+        return ZMapRefID;
     }
 }
 
